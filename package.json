@@ -1,0 +1,46 @@
+{
+  "name": "seervision-production",
+  "version": "0.0.1",
+  "description": "Seervision plugin for Companion",
+  "main": "dist/index.js",
+  "manufacturer": "Seervision",
+  "keywords": [
+    "seervision"
+  ],
+  "product": "Suite",
+  "shortname": "seervision",
+  "scripts": {
+    "build": "npx rimraf dist && npx typescript@~3.9.5 -p tsconfig.build.json",
+    "build:main": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -p tsconfig.build.json --watch",
+    "lint": "eslint . --ext .ts",
+    "postinstall": "npm run build"
+  },
+  "author": "Seervision AG",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.4.5"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts}": [
+      "npx lint --fix --",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.4"
+  }
+}

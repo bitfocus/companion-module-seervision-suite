@@ -2,7 +2,7 @@ import Connection from './Connection';
 
 export enum TrackingTarget {
   Default = '',
-  Center = 'center',
+  Middle = 'middle',
   Left = 'left',
   Right = 'right',
 }

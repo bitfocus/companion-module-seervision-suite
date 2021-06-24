@@ -5,6 +5,7 @@ import getElements from './elements';
 import * as instanceSkelTypes from '../../../instance_skel_types';
 import * as types from './types';
 import * as containerTypes from './api/ContainersManager';
+import * as trackingTypes from './api/TrackingManager';
 
 class SeervisionInstance extends InstanceSkel<types.Config> {
   #api: Api | null;
@@ -69,6 +70,16 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         break;
       case 'reset_connection':
         this.resetConnection();
+        break;
+      case 'start_tracking': {
+        const target: trackingTypes.TrackingTarget | null | undefined =
+          options.target === 'default' ? null : (options.target as trackingTypes.TrackingTarget);
+        this.#api?.trackingManager.startTracking(target ?? null);
+        break;
+      }
+      case 'stop_tracking': {
+        this.#api?.trackingManager.stopTracking();
+      }
     }
   }
 

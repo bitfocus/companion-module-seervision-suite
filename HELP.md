@@ -6,6 +6,8 @@ This module will allow you to control Seervision Suite during your production.
 
 - **Recall a container** - this action will recall a specific container.
 - **Create a container** - this action will create a container with a specified configuration.
+- **Start tracking** -- this action will initiate tracking, or switch tracked VIP as specified by the option.
+- **Toggle tracking** -- this action will toggle tracking or smth.
 
 ### Configuration
 

@@ -1,12 +1,17 @@
 import { CompanionPreset } from '../../../../instance_skel_types';
 
 import Api from '../api';
+import * as containerTypes from '../api/ContainersManager';
+import * as trackingTypes from '../api/TrackingManager';
 
 import { Instance } from '../types';
-import * as containerTypes from '../api/ContainersManager';
 
 export default function getPresets(api: Api, instance: Instance): Array<CompanionPreset> {
-  return [...getConnectionPresets(instance), ...getContainerPresets(api, instance)];
+  return [
+    ...getConnectionPresets(instance),
+    ...getContainerPresets(api, instance),
+    ...getTrackingPresets(instance),
+  ];
 }
 
 function getConnectionPresets(instance: Instance): Array<CompanionPreset> {
@@ -82,5 +87,72 @@ function getContainerPresets(api: Api, instance: Instance): Array<CompanionPrese
           ],
         } as CompanionPreset)
     ),
+  ];
+}
+
+function getTrackingPresets(instance: Instance): Array<CompanionPreset> {
+  return [
+    {
+      category: 'Tracking',
+      label: 'Toggle tracking',
+      bank: {
+        style: 'text',
+        text: 'Toggle tracking',
+        size: 'auto',
+        color: instance.rgb(255, 255, 255),
+        bgcolor: 0,
+      },
+      feedbacks: [
+        {
+          type: 'set_is_tracking',
+          options: {},
+        },
+      ],
+      actions: [
+        {
+          action: 'toggle_tracking',
+          options: {},
+        },
+      ],
+    },
+    ...Object.keys(trackingTypes.TrackingTarget).map(
+      (target) =>
+        ({
+          category: 'Tracking',
+          label: `Start tracking ${target}`,
+          bank: {
+            style: 'text',
+            text: `Start tracking ${target}`,
+            size: 'auto',
+            color: instance.rgb(255, 255, 255),
+            bgcolor: 0,
+          },
+          feedbacks: [],
+          actions: [
+            {
+              action: 'start_tracking',
+              options: { target: trackingTypes.TrackingTarget[target] },
+            },
+          ],
+        } as CompanionPreset)
+    ),
+    {
+      category: 'Tracking',
+      label: 'Stop tracking',
+      bank: {
+        style: 'text',
+        text: 'Stop tracking',
+        size: 'auto',
+        color: instance.rgb(255, 255, 255),
+        bgcolor: 0,
+      },
+      feedbacks: [],
+      actions: [
+        {
+          action: 'stop_tracking',
+          options: {},
+        },
+      ],
+    },
   ];
 }

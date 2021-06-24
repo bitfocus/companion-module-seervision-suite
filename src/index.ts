@@ -1,10 +1,11 @@
 import InstanceSkel = require('../../../instance_skel');
 import Api from './api';
-import getElements from './elements';
+import * as elements from './elements';
 
 import * as instanceSkelTypes from '../../../instance_skel_types';
 import * as types from './types';
 import * as containerTypes from './api/ContainersManager';
+import * as trackingTypes from './api/TrackingManager';
 
 class SeervisionInstance extends InstanceSkel<types.Config> {
   #api: Api | null;
@@ -38,8 +39,11 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   }
 
   initConnection(): void {
-    this.#api = new Api(this.config.host, () => this.initElements());
+    this.#api = new Api(this.config.host, this.onConnectionUpdate);
     this.#api.init();
+
+    const feedbacks = elements.getFeedbacks(this.#api, this);
+    this.setFeedbackDefinitions(feedbacks);
   }
 
   initElements(): void {
@@ -49,11 +53,17 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
       return;
     }
 
-    const { actions, presets } = getElements(this.#api, this);
+    const actions = elements.getActions(this.#api);
+    const presets = elements.getPresets(this.#api, this);
 
     this.setActions(actions);
     this.setPresetDefinitions(presets);
   }
+
+  onConnectionUpdate = (): void => {
+    this.initElements();
+    this.checkFeedbacks();
+  };
 
   action(action: instanceSkelTypes.CompanionActionEvent): void {
     const options = action.options;
@@ -69,6 +79,23 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         break;
       case 'reset_connection':
         this.resetConnection();
+        break;
+      case 'start_tracking': {
+        const target = options.target as trackingTypes.TrackingTarget;
+        this.#api?.trackingManager.startTracking(target);
+        break;
+      }
+      case 'stop_tracking':
+        this.#api?.trackingManager.stopTracking();
+        break;
+      case 'toggle_tracking': {
+        const isTracking = this.#api?.trackingManager.isTracking() ?? false;
+        if (isTracking) {
+          this.#api?.trackingManager.stopTracking();
+        } else {
+          this.#api?.trackingManager.startTracking(trackingTypes.TrackingTarget.Default);
+        }
+      }
     }
   }
 

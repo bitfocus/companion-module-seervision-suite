@@ -9,6 +9,9 @@ This module will allow you to control Seervision Suite during your production.
 - **Start tracking** -- this action will initiate tracking, or switch tracked VIP as specified by the option.
 - **Stop tracking** -- this action will stop tracking the VIP.
 - **Toggle tracking** -- this action will toggle tracking state.
+- **Take PTU control** -- this action will take control of the PTU from the head, if the head has its own control system.
+- **Release PTU control** -- this action will release control of the PTU from the head, if the head has its own control system.
+- **Toggle PTU control** -- this action will toggle control of the PTU from the head, if the head has its own control system.
 
 ### Configuration
 

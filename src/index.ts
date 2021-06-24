@@ -1,8 +1,8 @@
 import InstanceSkel = require('../../../instance_skel');
 import Api from './api';
+import getElements from './elements';
 
 import * as instanceSkelTypes from '../../../instance_skel_types';
-
 import * as types from './types';
 
 class SeervisionInstance extends InstanceSkel<types.Config> {
@@ -12,7 +12,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
     super(system, id, config);
 
     this.#api = null;
-    this.initActions();
+    this.initConnection();
   }
 
   config_fields(): instanceSkelTypes.CompanionInputFieldTextInput[] {
@@ -32,82 +32,25 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   }
 
   init(): void {
+    this.initElements();
     this.initConnection();
   }
 
-  async initConnection(): Promise<void> {
-    this.#api = new Api(this.config.host);
-    this.#api.onContainersUpdated(() => this.initActions());
-    await this.#api.waitForConnection();
-    this.#api.subscribeToContainers();
+  initConnection(): void {
+    this.#api = new Api(this.config.host, () => this.initElements());
+    this.#api.init();
   }
 
-  initActions(): void {
-    const actions = {};
+  initElements(): void {
+    if (!this.#api) {
+      this.setActions({});
+      this.setPresetDefinitions([]);
+      return;
+    }
 
-    const containers = this.#api?.containers ?? [];
-    actions['recall_container'] = {
-      label: 'Recall Container',
-      options: [
-        {
-          type: 'dropdown',
-          id: 'containerId',
-          default: containers[0]?.id,
-          choices: containers.map(({ id, name: label }) => ({ id, label })) ?? [],
-          minChoicesForSearch: 0,
-        },
-      ],
-    };
-
-    actions['reset_connection'] = {
-      label: 'Reset Connection',
-    };
+    const { actions, presets } = getElements(this.#api, this);
 
     this.setActions(actions);
-
-    const presets: Array<instanceSkelTypes.CompanionPreset> = [
-      {
-        category: 'Connection',
-        label: 'Reset connection',
-        bank: {
-          style: 'text',
-          text: `Reset connection`,
-          size: 'auto',
-          color: this.rgb(255, 255, 255),
-          bgcolor: 0,
-        },
-        feedbacks: [],
-        actions: [
-          {
-            action: 'reset_connection',
-            options: {},
-          },
-        ],
-      },
-      ...containers.map(
-        ({ id, name }) =>
-          ({
-            category: 'Containers',
-            label: 'Recall container',
-            bank: {
-              style: 'text',
-              text: `Recall "${name}"`,
-              size: 'auto',
-              color: this.rgb(255, 255, 255),
-              bgcolor: 0,
-            },
-            feedbacks: [],
-            actions: [
-              {
-                action: 'recall_container',
-                options: {
-                  containerId: id,
-                },
-              },
-            ],
-          } as instanceSkelTypes.CompanionPreset)
-      ),
-    ];
     this.setPresetDefinitions(presets);
   }
 
@@ -116,7 +59,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 
     switch (action.action) {
       case 'recall_container':
-        this.#api?.recallContainer(options.containerId?.toString() ?? '');
+        this.#api?.containersManager.recallContainer(options.containerId?.toString() ?? '');
         break;
       case 'reset_connection':
         this.resetConnection();

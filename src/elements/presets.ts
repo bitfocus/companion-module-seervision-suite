@@ -1,11 +1,9 @@
 import { CompanionPreset } from '../../../../instance_skel_types';
-import InstanceSkel from '../../../../instance_skel';
 
 import Api from '../api';
 
-import * as types from '../types';
-
-type Instance = InstanceSkel<types.Config>;
+import { Instance } from '../types';
+import * as containerTypes from '../api/ContainersManager';
 
 export default function getPresets(api: Api, instance: Instance): Array<CompanionPreset> {
   return [...getConnectionPresets(instance), ...getContainerPresets(api, instance)];
@@ -56,6 +54,29 @@ function getContainerPresets(api: Api, instance: Instance): Array<CompanionPrese
               action: 'recall_container',
               options: {
                 containerId: id,
+              },
+            },
+          ],
+        } as CompanionPreset)
+    ),
+    ...Object.keys(containerTypes.ContainerConfiguration).map(
+      (configuration) =>
+        ({
+          category: 'Containers',
+          label: 'Create container',
+          bank: {
+            style: 'text',
+            text: `Create ${configuration} container`,
+            size: 'auto',
+            color: instance.rgb(255, 255, 255),
+            bgcolor: 0,
+          },
+          feedbacks: [],
+          actions: [
+            {
+              action: 'create_container',
+              options: {
+                configuration: containerTypes.ContainerConfiguration[configuration],
               },
             },
           ],

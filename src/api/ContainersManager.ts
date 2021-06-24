@@ -1,11 +1,20 @@
 import Connection from './Connection';
 
-import * as types from '../types';
+export type Container = {
+  id: string;
+  name: string;
+};
+
+export enum ContainerConfiguration {
+  Empty = 'empty',
+  Position = 'position',
+  Shot = 'shot',
+}
 
 export default class ContainersManager {
   readonly #connection: Connection;
   readonly #notifyOwner: () => void;
-  #containers: Array<types.Container>;
+  #containers: Array<Container>;
 
   constructor(connection: Connection, notifyOwner: () => void) {
     this.#connection = connection;
@@ -19,16 +28,22 @@ export default class ContainersManager {
     this.#connection.subscribe('containers/updates', this.#onUpdate);
   }
 
-  #onUpdate = (msg: { containers: Array<types.Container> }): void => {
+  #onUpdate = (msg: { containers: Array<Container> }): void => {
     this.#containers = msg.containers;
     this.#notifyOwner();
   };
 
-  getContainers(): Array<types.Container> {
+  getContainers(): Array<Container> {
     return [...this.#containers];
   }
 
   recallContainer(containerId: string): void {
     this.#connection.callService('containers/recall', { container_id: containerId });
+  }
+
+  createContainer(configuration: ContainerConfiguration): void {
+    this.#connection.callService('containers/create', {
+      configuration_type: configuration,
+    });
   }
 }

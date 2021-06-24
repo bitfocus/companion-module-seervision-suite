@@ -4,6 +4,7 @@ import getElements from './elements';
 
 import * as instanceSkelTypes from '../../../instance_skel_types';
 import * as types from './types';
+import * as containerTypes from './api/ContainersManager';
 
 class SeervisionInstance extends InstanceSkel<types.Config> {
   #api: Api | null;
@@ -60,6 +61,11 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
     switch (action.action) {
       case 'recall_container':
         this.#api?.containersManager.recallContainer(options.containerId?.toString() ?? '');
+        break;
+      case 'create_container':
+        this.#api?.containersManager.createContainer(
+          options.configuration as containerTypes.ContainerConfiguration
+        );
         break;
       case 'reset_connection':
         this.resetConnection();

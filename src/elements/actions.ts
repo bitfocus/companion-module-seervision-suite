@@ -60,14 +60,6 @@ function getContainerActions(api: Api): CompanionActions {
 }
 
 function getTrackingActions(): CompanionActions {
-  const trackingTargets = [
-    { id: 'default', label: 'Default' },
-    ...Object.keys(trackingTypes.TrackingTarget).map((target) => ({
-      id: trackingTypes.TrackingTarget[target],
-      label: target,
-    })),
-  ];
-
   return {
     start_tracking: {
       label: 'Start tracking',
@@ -75,8 +67,11 @@ function getTrackingActions(): CompanionActions {
         {
           type: 'dropdown',
           id: 'target',
-          default: 'default',
-          choices: trackingTargets,
+          default: trackingTypes.TrackingTarget.Default,
+          choices: Object.keys(trackingTypes.TrackingTarget).map((target) => ({
+            id: trackingTypes.TrackingTarget[target],
+            label: target,
+          })),
           multiple: false,
           label: 'Target',
         },
@@ -84,6 +79,10 @@ function getTrackingActions(): CompanionActions {
     },
     stop_tracking: {
       label: 'Stop tracking',
+      options: [],
+    },
+    toggle_tracking: {
+      label: 'Toggle tracking',
       options: [],
     },
   } as CompanionActions;

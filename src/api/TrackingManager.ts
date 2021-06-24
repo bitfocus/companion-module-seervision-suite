@@ -1,6 +1,7 @@
 import Connection from './Connection';
 
 export enum TrackingTarget {
+  Default = '',
   Center = 'center',
   Left = 'left',
   Right = 'right',
@@ -32,7 +33,7 @@ export default class TrackingManager {
     this.#connection.callService('tracking/stop');
   }
 
-  startTracking(target: TrackingTarget | null): void {
+  startTracking(target: TrackingTarget): void {
     this.#connection.callService('tracking/start', { target });
   }
 

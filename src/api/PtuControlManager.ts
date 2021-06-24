@@ -30,7 +30,15 @@ export default class PtuControlManager {
     this.#connection.callService('ptu_driver/release_control');
   }
 
-  isInControl() {
+  isInControl(): boolean {
     return this.#isInControl;
+  }
+
+  toggleControl(): void {
+    if (this.isInControl()) {
+      this.releaseControl();
+    } else {
+      this.takeControl();
+    }
   }
 }

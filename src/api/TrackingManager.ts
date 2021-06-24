@@ -40,4 +40,12 @@ export default class TrackingManager {
   isTracking(): boolean {
     return this.#isTracking;
   }
+
+  toggleTracking(): void {
+    if (this.#isTracking) {
+      this.stopTracking();
+    } else {
+      this.startTracking(TrackingTarget.Default);
+    }
+  }
 }

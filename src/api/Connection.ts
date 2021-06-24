@@ -54,11 +54,14 @@ export default class Connection {
   }
 
   subscribe<T extends Record<string, unknown>>(topic: string, callback: (msg: T) => unknown): void {
-    this._sendMessage({
-      op: 'subscribe',
-      topic: `${API_PATH}/${topic}`,
-    });
-    this.#subscriptionCallbacks[topic] = this.#subscriptionCallbacks[topic] ?? [];
+    if (!this.#subscriptionCallbacks[topic]) {
+      this._sendMessage({
+        op: 'subscribe',
+        topic: `${API_PATH}/${topic}`,
+      });
+      this.#subscriptionCallbacks[topic] = [];
+    }
+
     this.#subscriptionCallbacks[topic].push(callback as SubscriptionCallback);
   }
 

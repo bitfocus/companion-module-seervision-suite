@@ -13,23 +13,14 @@
     "build": "npx rimraf dist && npx typescript@~3.9.5 -p tsconfig.build.json",
     "build:main": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -p tsconfig.build.json --watch",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --max-warnings 0",
+    "prettier": "prettier --config .prettierrc --write \"src/**/*.ts\"",
     "postinstall": "npm run build"
   },
   "author": "Seervision AG",
   "license": "MIT",
   "dependencies": {
     "ws": "^7.4.5"
-  },
-  "lint-staged": {
-    "*.{js,json,md}": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.{ts}": [
-      "npx lint --fix --",
-      "git add"
-    ]
   },
   "devDependencies": {
     "@types/node": "^15.12.4",

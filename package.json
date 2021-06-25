@@ -14,6 +14,7 @@
     "build:main": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -p tsconfig.build.json --watch",
     "lint": "eslint . --ext .ts --max-warnings 0",
+    "lint-fix": "eslint . --ext .ts --fix --max-warnings 0",
     "prettify-all": "prettier --config .prettierrc --write \"src/**/*.ts\"",
     "postinstall": "npm run build"
   },

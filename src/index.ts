@@ -68,12 +68,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   action(action: instanceSkelTypes.CompanionActionEvent): void {
     const options = action.options;
 
-    var meh = 'sup'
-
-
-
-
-
+    var meh = 'sup';
 
     switch (action.action) {
       case 'recall_container':

@@ -14,7 +14,7 @@
     "build:main": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -p tsconfig.build.json --watch",
     "lint": "eslint . --ext .ts --max-warnings 0",
-    "prettier": "prettier --config .prettierrc --write \"src/**/*.ts\"",
+    "prettify-all": "prettier --config .prettierrc --write \"src/**/*.ts\"",
     "postinstall": "npm run build"
   },
   "author": "Seervision AG",

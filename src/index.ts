@@ -102,7 +102,14 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         this.#api?.ptuControlManager.toggleControl();
         break;
       }
+      default:
+        this.handleUnknownAction();
+        break;
     }
+  }
+
+  handleUnknownAction(): void {
+    // Dummy action handler for tests.
   }
 
   updateConfig(config: types.Config): void {

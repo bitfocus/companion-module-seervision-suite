@@ -1,4 +1,4 @@
-import InstanceSkel = require('../../../instance_skel');
+import InstanceSkel from '../../../instance_skel';
 import Api from './api';
 import * as elements from './elements';
 
@@ -127,4 +127,4 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   }
 }
 
-export = SeervisionInstance;
+module.exports = SeervisionInstance;

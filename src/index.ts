@@ -103,13 +103,14 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         break;
       }
       default:
-        this.handleUnknownAction();
+        this.handleUnknownAction(action.action);
         break;
     }
   }
 
-  handleUnknownAction(): void {
-    // Dummy action handler for tests.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  handleUnknownAction(action: string): void {
+    // Dummy action handler for tests. Accepts action for better error output.
   }
 
   updateConfig(config: types.Config): void {

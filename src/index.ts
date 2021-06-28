@@ -89,12 +89,18 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         this.#api?.trackingManager.stopTracking();
         break;
       case 'toggle_tracking': {
-        const isTracking = this.#api?.trackingManager.isTracking() ?? false;
-        if (isTracking) {
-          this.#api?.trackingManager.stopTracking();
-        } else {
-          this.#api?.trackingManager.startTracking(trackingTypes.TrackingTarget.Default);
-        }
+        this.#api?.trackingManager.toggleTracking();
+        break;
+      }
+      case 'take_ptu_control':
+        this.#api?.ptuControlManager.takeControl();
+        break;
+      case 'release_ptu_control':
+        this.#api?.ptuControlManager.releaseControl();
+        break;
+      case 'toggle_ptu_control': {
+        this.#api?.ptuControlManager.toggleControl();
+        break;
       }
     }
   }

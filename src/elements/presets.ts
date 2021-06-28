@@ -11,6 +11,7 @@ export default function getPresets(api: Api, instance: Instance): Array<Companio
     ...getConnectionPresets(instance),
     ...getContainerPresets(api, instance),
     ...getTrackingPresets(instance),
+    ...getPtuControlPresets(instance),
   ];
 }
 
@@ -150,6 +151,70 @@ function getTrackingPresets(instance: Instance): Array<CompanionPreset> {
       actions: [
         {
           action: 'stop_tracking',
+          options: {},
+        },
+      ],
+    },
+  ];
+}
+
+function getPtuControlPresets(instance: Instance): Array<CompanionPreset> {
+  return [
+    {
+      category: 'PTU control',
+      label: 'Toggle control',
+      bank: {
+        style: 'text',
+        text: 'Toggle PTU control',
+        size: 'auto',
+        color: instance.rgb(255, 255, 255),
+        bgcolor: 0,
+      },
+      feedbacks: [
+        {
+          type: 'set_has_ptu_control',
+          options: {},
+        },
+      ],
+      actions: [
+        {
+          action: 'toggle_ptu_control',
+          options: {},
+        },
+      ],
+    },
+    {
+      category: 'PTU control',
+      label: 'Take control',
+      bank: {
+        style: 'text',
+        text: 'Take PTU control',
+        size: 'auto',
+        color: instance.rgb(255, 255, 255),
+        bgcolor: 0,
+      },
+      feedbacks: [],
+      actions: [
+        {
+          action: 'take_ptu_control',
+          options: {},
+        },
+      ],
+    },
+    {
+      category: 'PTU control',
+      label: 'Release control',
+      bank: {
+        style: 'text',
+        text: 'Release PTU control',
+        size: 'auto',
+        color: instance.rgb(255, 255, 255),
+        bgcolor: 0,
+      },
+      feedbacks: [],
+      actions: [
+        {
+          action: 'release_ptu_control',
           options: {},
         },
       ],

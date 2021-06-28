@@ -108,8 +108,9 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/ban-ts-comment
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleUnknownAction(action: string): void {
     // Dummy action handler for tests. Accepts action for better error output.
   }

@@ -1,6 +1,5 @@
 stages:
   - build
-  - lint
   - test
 
 variables:
@@ -18,7 +17,7 @@ npm_install:
     - master
 
 linters:
-  stage: lint
+  stage: test
   image: ${DOCKER_BUILD_IMAGE}
   dependencies:
     - npm_install

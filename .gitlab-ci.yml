@@ -1,0 +1,29 @@
+stages:
+  - build
+  - lint
+
+variables:
+  DOCKER_BUILD_IMAGE: node:12.21.0
+
+npm_install:
+  stage: build
+  image: ${DOCKER_BUILD_IMAGE}
+  artifacts:
+    untracked: true
+  script:
+    - npm install
+  only:
+    - merge_requests
+    - master
+
+run_linters:
+  stage: lint
+  image: ${DOCKER_BUILD_IMAGE}
+  dependencies:
+    - npm_install
+  script:
+    - npx prettier --config .prettierrc --check "src/**/*.ts"
+    - npx eslint . --ext .ts --max-warnings 0
+  only:
+    - merge_requests
+    - master

@@ -47,7 +47,7 @@ export default function getFeedbacks(api: Api, instance: Instance): CompanionFee
       },
     },
     set_container_deleted: {
-      type: 'boolean',
+      type: 'advanced',
       label: 'Container was deleted',
       description: 'Changes button style if linked container was deleted',
       options: [
@@ -61,12 +61,15 @@ export default function getFeedbacks(api: Api, instance: Instance): CompanionFee
           label: 'ContainerID',
         },
       ],
-      style: {
-        // todo [albina]:
-      },
-      callback: () => {
-        // todo [albina]:
-        return false;
+      callback: ({ options }) => {
+        const containerId = options.containerId;
+        return containers.every((container) => container.id !== containerId)
+          ? {
+              text: 'Linked container was deleted',
+              bgcolor: instance.rgb(127, 132, 129),
+              color: instance.rgb(255, 255, 255),
+            }
+          : {};
       },
     },
   };

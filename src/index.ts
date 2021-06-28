@@ -41,23 +41,23 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   initConnection(): void {
     this.#api = new Api(this.config.host, this.onConnectionUpdate);
     this.#api.init();
-
-    const feedbacks = elements.getFeedbacks(this.#api, this);
-    this.setFeedbackDefinitions(feedbacks);
   }
 
   initElements(): void {
     if (!this.#api) {
       this.setActions({});
       this.setPresetDefinitions([]);
+      this.setFeedbackDefinitions({});
       return;
     }
 
     const actions = elements.getActions(this.#api);
     const presets = elements.getPresets(this.#api, this);
+    const feedbacks = elements.getFeedbacks(this.#api, this);
 
     this.setActions(actions);
     this.setPresetDefinitions(presets);
+    this.setFeedbackDefinitions(feedbacks);
   }
 
   onConnectionUpdate = (): void => {

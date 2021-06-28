@@ -13,7 +13,8 @@ jest.mock(
       constructor(system: any, id: string, config) {
         this.config = config;
       }
-    }
+    },
+  { virtual: true }
 );
 
 const api: Api = new (Api as jest.Mock)();

@@ -1,4 +1,4 @@
-import InstanceSkel = require('../../../instance_skel');
+import InstanceSkel from '../../../instance_skel';
 import Api from './api';
 import * as elements from './elements';
 
@@ -102,7 +102,17 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         this.#api?.ptuControlManager.toggleControl();
         break;
       }
+      default:
+        this.handleUnknownAction(action.action);
+        break;
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  handleUnknownAction(action: string): void {
+    // Dummy action handler for tests. Accepts action for better error output.
   }
 
   updateConfig(config: types.Config): void {
@@ -120,4 +130,4 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   }
 }
 
-export = SeervisionInstance;
+module.exports = SeervisionInstance;

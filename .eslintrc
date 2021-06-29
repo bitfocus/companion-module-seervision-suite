@@ -2,7 +2,7 @@
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {},
-  "env": { "es2017": true },
+  "env": { "es2017": true, "node": true },
   "parserOptions": { "sourceType": "module", "ecmaVersion": 2018 },
   "overrides": [
     {
@@ -16,6 +16,14 @@
         "plugin:@typescript-eslint/recommended"
       ],
       "rules": {}
+    },
+    {
+      "files": ["**/__mocks__/**/*.ts", "**/*.test.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     }
   ],
   "ignorePatterns": ["dist/**/*.*", "node_modules/**/*.*"]

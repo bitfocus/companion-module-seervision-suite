@@ -1,6 +1,6 @@
 stages:
   - build
-  - lint
+  - test
 
 variables:
   DOCKER_BUILD_IMAGE: node:12.21.0
@@ -16,14 +16,25 @@ npm_install:
     - merge_requests
     - master
 
-run_linters:
-  stage: lint
+linters:
+  stage: test
   image: ${DOCKER_BUILD_IMAGE}
   dependencies:
     - npm_install
   script:
     - npx prettier --config .prettierrc --check "src/**/*.ts"
     - npx eslint . --ext .ts --max-warnings 0
+  only:
+    - merge_requests
+    - master
+
+unit_tests:
+  stage: test
+  image: ${DOCKER_BUILD_IMAGE}
+  dependencies:
+    - npm_install
+  script:
+    - npx jest
   only:
     - merge_requests
     - master

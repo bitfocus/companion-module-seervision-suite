@@ -54,7 +54,12 @@ function getContainerPresets(api: Api, instance: Instance): Array<CompanionPrese
             color: instance.rgb(255, 255, 255),
             bgcolor: 0,
           },
-          feedbacks: [],
+          feedbacks: [
+            {
+              type: 'set_container_deleted',
+              options: { containerId: id },
+            },
+          ],
           actions: [
             {
               action: 'recall_container',

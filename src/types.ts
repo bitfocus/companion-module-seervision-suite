@@ -5,3 +5,7 @@ export type Config = {
 };
 
 export type Instance = InstanceSkel<Config>;
+
+export interface Logger {
+  log: Instance['log'];
+}

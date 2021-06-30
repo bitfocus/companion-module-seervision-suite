@@ -3,13 +3,17 @@ import WebSocket from 'ws';
 const ROS_BRIDGE_PORT = '49152';
 const API_PATH = '/api/v1';
 
+import type { Logger } from '../types';
+
 type SubscriptionCallback = (msg: Record<string, unknown>) => unknown;
 
 export default class Connection {
   readonly #connection: WebSocket;
   readonly #subscriptionCallbacks: Record<string, Array<SubscriptionCallback>>;
+  readonly #logger: Logger;
+  #isLoaded: boolean;
 
-  constructor(dopIp: string) {
+  constructor(dopIp: string, logger: Logger) {
     const url = `ws://${dopIp}:${ROS_BRIDGE_PORT}`;
     this.#connection = new WebSocket(url);
 
@@ -17,6 +21,8 @@ export default class Connection {
     this.#connection.on('error', this._onError);
 
     this.#subscriptionCallbacks = {};
+    this.#logger = logger;
+    this.#isLoaded = false;
   }
 
   _sendMessage(msg: unknown): void {
@@ -36,13 +42,13 @@ export default class Connection {
         this.#subscriptionCallbacks[topic]?.forEach((callback) => callback(msg.msg));
       }
     } catch (error) {
-      console.error('Failed to parse incoming msg');
+      this.#logger.log('error', 'Failed to parse incoming msg');
     }
   };
 
-  _onError = (error: unknown): void => {
-    console.error('Connection error:');
-    console.error(error);
+  _onError = (error: Error): void => {
+    this.#logger.log('error', 'Connection error:');
+    this.#logger.log('error', error.toString());
   };
 
   callService(service: string, args: Record<string, unknown> = {}): void {
@@ -65,9 +71,16 @@ export default class Connection {
     this.#subscriptionCallbacks[topic].push(callback as SubscriptionCallback);
   }
 
-  waitForConnection(): Promise<void> {
+  async waitForConnection(): Promise<void> {
+    if (this.#isLoaded) {
+      return;
+    }
+
     return new Promise((resolve) => {
-      this.#connection.on('open', resolve);
+      this.#connection.on('open', () => {
+        this.#isLoaded = true;
+        resolve();
+      });
     });
   }
 

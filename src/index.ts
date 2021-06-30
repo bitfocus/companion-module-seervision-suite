@@ -14,7 +14,6 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
     super(system, id, config);
 
     this.#api = null;
-    this.initConnection();
   }
 
   config_fields(): instanceSkelTypes.CompanionInputFieldTextInput[] {
@@ -39,7 +38,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
   }
 
   initConnection(): void {
-    this.#api = new Api(this.config.host, this.onConnectionUpdate);
+    this.#api = new Api(this.config.host, this.onConnectionUpdate, this);
     this.#api.init();
   }
 

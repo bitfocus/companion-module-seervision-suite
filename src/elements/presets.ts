@@ -59,6 +59,10 @@ function getContainerPresets(api: Api, instance: Instance): Array<CompanionPrese
               type: 'set_container_deleted',
               options: { containerId: id },
             },
+            {
+              type: 'set_container_status',
+              options: { containerId: id },
+            },
           ],
           actions: [
             {

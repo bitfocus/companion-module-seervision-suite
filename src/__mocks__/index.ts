@@ -1,7 +1,7 @@
 class InstanceSkeleton {
-  rgb() {
-    return 0;
-  }
+	rgb() {
+		return 0
+	}
 }
 
-module.exports = InstanceSkeleton;
+module.exports = InstanceSkeleton

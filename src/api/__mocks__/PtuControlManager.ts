@@ -1,7 +1,7 @@
 export default class PtuControlManager {
-  takeControl() {}
+	takeControl() {}
 
-  releaseControl() {}
+	releaseControl() {}
 
-  toggleControl() {}
+	toggleControl() {}
 }

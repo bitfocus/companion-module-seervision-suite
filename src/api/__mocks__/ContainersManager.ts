@@ -1,14 +1,14 @@
 export default class ContainersManager {
-  getContainers() {
-    return [
-      {
-        id: 'dummy-id',
-        name: 'dummy-name',
-      },
-    ];
-  }
+	getContainers() {
+		return [
+			{
+				id: 'dummy-id',
+				name: 'dummy-name',
+			},
+		]
+	}
 
-  recallContainer() {}
+	recallContainer() {}
 
-  createContainer() {}
+	createContainer() {}
 }

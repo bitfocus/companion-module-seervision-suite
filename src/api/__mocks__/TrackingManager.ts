@@ -1,7 +1,7 @@
 export default class TrackingManager {
-  startTracking() {}
+	startTracking() {}
 
-  stopTracking() {}
+	stopTracking() {}
 
-  toggleTracking() {}
+	toggleTracking() {}
 }

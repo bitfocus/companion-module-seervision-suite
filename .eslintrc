@@ -1,6 +1,5 @@
 {
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "extends": ["eslint:recommended"],
   "rules": {},
   "env": { "es2017": true, "node": true },
   "parserOptions": { "sourceType": "module", "ecmaVersion": 2018 },
@@ -15,7 +14,9 @@
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "no-mixed-spaces-and-tabs": "off"
+      }
     },
     {
       "files": ["**/__mocks__/**/*.ts", "**/*.test.ts"],

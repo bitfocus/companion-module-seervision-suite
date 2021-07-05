@@ -22,6 +22,7 @@ linters:
   dependencies:
     - npm_install
   script:
+    - curl https://raw.githubusercontent.com/bitfocus/companion/master/.prettierrc --output .prettierrc
     - npx prettier --config .prettierrc --check "src/**/*.ts"
     - npx eslint . --ext .ts --max-warnings 0
   only:

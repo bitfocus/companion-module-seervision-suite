@@ -2,3 +2,8 @@
 
 dist
 node_modules
+
+# Files below are helpful to have in the repo as standalone files,
+# but they should not be committed because of Companion infrastructure.
+.prettierrc
+package-lock.json

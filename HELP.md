@@ -1,6 +1,6 @@
 ## Seervision Production
 
-This module will allow you to control Seervision Suite during your production.
+This module will allow you to control Seervision Suite during your production. For the full information about the setup and usage, please refer to the [Seervision User Manual](https://manual.seervision.com/#/companion_module).
 
 ### Available actions
 

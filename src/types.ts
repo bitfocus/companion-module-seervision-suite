@@ -1,11 +1,11 @@
-import InstanceSkel from '../../../instance_skel';
+import InstanceSkel from '../../../instance_skel'
 
 export type Config = {
-  host: string;
-};
+	host: string
+}
 
-export type Instance = InstanceSkel<Config>;
+export type Instance = InstanceSkel<Config>
 
 export interface Logger {
-  log: Instance['log'];
+	log: Instance['log']
 }

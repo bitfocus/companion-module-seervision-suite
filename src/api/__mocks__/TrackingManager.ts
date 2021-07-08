@@ -4,4 +4,6 @@ export default class TrackingManager {
 	stopTracking() {}
 
 	toggleTracking() {}
+
+	startTrackingAtPoint() {}
 }

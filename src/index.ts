@@ -82,6 +82,12 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 				this.#api?.trackingManager.startTracking(target)
 				break
 			}
+			case 'start_tracking_at_point': {
+				const x = options.target_point_x as number
+				const y = options.target_point_y as number
+				this.#api?.trackingManager.startTrackingAtPoint({ x, y })
+				break
+			}
 			case 'stop_tracking':
 				this.#api?.trackingManager.stopTracking()
 				break

@@ -78,6 +78,27 @@ function getTrackingActions(): CompanionActions {
 				},
 			],
 		},
+		start_tracking_at_point: {
+			label: 'Start tracking at point',
+			options: [
+				{
+					id: 'target_point_x',
+					label: 'Target point X',
+					type: 'number',
+					min: 0.1,
+					max: 0.9,
+					default: 0.5,
+				},
+				{
+					id: 'target_point_y',
+					label: 'Target point Y',
+					type: 'number',
+					min: 0.1,
+					max: 0.9,
+					default: 0.5,
+				},
+			],
+		},
 		stop_tracking: {
 			label: 'Stop tracking',
 			options: [],

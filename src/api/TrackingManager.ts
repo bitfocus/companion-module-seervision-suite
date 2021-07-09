@@ -7,6 +7,11 @@ export enum TrackingTarget {
 	Right = 'right',
 }
 
+type Point2d = {
+	x: number
+	y: number
+}
+
 export default class TrackingManager {
 	readonly #connection: Connection
 	readonly #notifyOwner: () => void
@@ -35,6 +40,10 @@ export default class TrackingManager {
 
 	startTracking(target: TrackingTarget): void {
 		this.#connection.callService('tracking/start', { target })
+	}
+
+	startTrackingAtPoint(targetPoint: Point2d): void {
+		this.#connection.callService('tracking/start', { target: 'point', target_point: targetPoint })
 	}
 
 	isTracking(): boolean {

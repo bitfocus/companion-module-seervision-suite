@@ -1,6 +1,6 @@
 {
   "name": "seervision-suite",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Seervision plugin for Companion",
   "main": "dist/index.js",
   "manufacturer": "Seervision",

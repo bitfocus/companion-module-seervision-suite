@@ -5,6 +5,7 @@ import * as elements from './elements';
 import * as instanceSkelTypes from '../../../instance_skel_types';
 import * as types from './types';
 import * as containerTypes from './api/ContainersManager';
+import * as tallyTypes from './api/TallyManager';
 import * as trackingTypes from './api/TrackingManager';
 
 class SeervisionInstance extends InstanceSkel<types.Config> {
@@ -100,6 +101,11 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
         break;
       case 'toggle_ptu_control': {
         this.#api?.ptuControlManager.toggleControl();
+        break;
+      }
+      case 'set_tally_status': {
+        const status = options.status as tallyTypes.TallyState;
+        this.#api?.tallyManager.setTallyState(status);
         break;
       }
       default:

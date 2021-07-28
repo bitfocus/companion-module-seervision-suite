@@ -10,9 +10,9 @@ export default function getActions(api: Api): CompanionActions {
 	return {
 		...getConnectionActions(),
 		...getContainerActions(api),
-		...getTrackingActions(),
 		...getPtuControlActions(),
 		...getTallyActions(),
+		...getTrackingActions(),
 	}
 }
 
@@ -60,6 +60,23 @@ function getContainerActions(api: Api): CompanionActions {
 			],
 		},
 	} as CompanionActions
+}
+
+function getPtuControlActions(): CompanionActions {
+	return {
+		take_ptu_control: {
+			label: 'Take PTU control',
+			options: [],
+		},
+		release_ptu_control: {
+			label: 'Release PTU control',
+			options: [],
+		},
+		toggle_ptu_control: {
+			label: 'Toggle PTU control',
+			options: [],
+		},
+	}
 }
 
 function getTallyActions(): CompanionActions {
@@ -131,21 +148,4 @@ function getTrackingActions(): CompanionActions {
 			options: [],
 		},
 	} as CompanionActions
-}
-
-function getPtuControlActions(): CompanionActions {
-	return {
-		take_ptu_control: {
-			label: 'Take PTU control',
-			options: [],
-		},
-		release_ptu_control: {
-			label: 'Release PTU control',
-			options: [],
-		},
-		toggle_ptu_control: {
-			label: 'Toggle PTU control',
-			options: [],
-		},
-	}
 }

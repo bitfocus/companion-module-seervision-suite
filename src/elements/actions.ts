@@ -3,6 +3,7 @@ import { CompanionActions } from '../../../../instance_skel_types'
 import Api from '../api'
 
 import * as containerTypes from '../api/ContainersManager'
+import * as tallyTypes from '../api/TallyManager'
 import * as trackingTypes from '../api/TrackingManager'
 
 export default function getActions(api: Api): CompanionActions {
@@ -11,6 +12,7 @@ export default function getActions(api: Api): CompanionActions {
 		...getContainerActions(api),
 		...getTrackingActions(),
 		...getPtuControlActions(),
+		...getTallyActions(),
 	}
 }
 
@@ -58,6 +60,27 @@ function getContainerActions(api: Api): CompanionActions {
 			],
 		},
 	} as CompanionActions
+}
+
+function getTallyActions(): CompanionActions {
+	return {
+		set_tally_status: {
+			label: 'Set tally status',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'status',
+					default: tallyTypes.TallyState.None,
+					choices: Object.keys(tallyTypes.TallyState).map((status) => ({
+						id: tallyTypes.TallyState[status],
+						label: status,
+					})),
+					multiple: false,
+					label: 'Status',
+				},
+			],
+		},
+	}
 }
 
 function getTrackingActions(): CompanionActions {

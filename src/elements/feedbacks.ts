@@ -1,6 +1,7 @@
 import { CompanionFeedbacks } from '../../../../instance_skel_types'
 
 import Api from '../api'
+import { TallyState } from '../api/TallyManager'
 import { Instance } from '../types'
 import * as containerTypes from '../api/ContainersManager'
 
@@ -120,6 +121,41 @@ export default function getFeedbacks(api: Api, instance: Instance): CompanionFee
 				}
 
 				return {}
+			},
+		},
+		set_tally_status: {
+			type: 'advanced',
+			label: 'Tally status',
+			description: 'Changes button style according to tally status',
+			options: [],
+			callback: () => {
+				const tallyState = api.tallyManager.tallyState()
+
+				switch (tallyState) {
+					case TallyState.None:
+						return {
+							text: 'None',
+							bgcolor: instance.rgb(127, 132, 129),
+							color: instance.rgb(255, 255, 255),
+						}
+					case TallyState.Preview:
+						return {
+							text: 'Preview',
+							bgcolor: instance.rgb(29, 129, 57),
+							color: instance.rgb(255, 255, 255),
+						}
+					case TallyState.Program:
+						return {
+							text: 'Program',
+							bgcolor: instance.rgb(192, 37, 40),
+							color: instance.rgb(255, 255, 255),
+						}
+					default:
+						// eslint-disable-next-line @typescript-eslint/no-extra-semi
+						;((val: never): never => {
+							throw new Error(`Tally status '${val}' not implemented`)
+						})(tallyState)
+				}
 			},
 		},
 	}

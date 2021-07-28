@@ -5,7 +5,7 @@ import InstanceSkeleton from '../..'
 jest.mock('../../api')
 jest.mock('../..')
 
-const FEEDBACKS_COUNT = 4
+const FEEDBACKS_COUNT = 5
 
 const api: Api = new (Api as jest.Mock)()
 const instance: InstanceSkeleton = new (InstanceSkeleton as any)()

@@ -3,14 +3,16 @@ import { CompanionActions } from '../../../../instance_skel_types'
 import Api from '../api'
 
 import * as containerTypes from '../api/ContainersManager'
+import * as tallyTypes from '../api/TallyManager'
 import * as trackingTypes from '../api/TrackingManager'
 
 export default function getActions(api: Api): CompanionActions {
 	return {
 		...getConnectionActions(),
 		...getContainerActions(api),
-		...getTrackingActions(),
 		...getPtuControlActions(),
+		...getTallyActions(),
+		...getTrackingActions(),
 	}
 }
 
@@ -58,6 +60,44 @@ function getContainerActions(api: Api): CompanionActions {
 			],
 		},
 	} as CompanionActions
+}
+
+function getPtuControlActions(): CompanionActions {
+	return {
+		take_ptu_control: {
+			label: 'Take PTU control',
+			options: [],
+		},
+		release_ptu_control: {
+			label: 'Release PTU control',
+			options: [],
+		},
+		toggle_ptu_control: {
+			label: 'Toggle PTU control',
+			options: [],
+		},
+	}
+}
+
+function getTallyActions(): CompanionActions {
+	return {
+		set_tally_status: {
+			label: 'Set tally status',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'status',
+					default: tallyTypes.TallyState.None,
+					choices: Object.keys(tallyTypes.TallyState).map((status) => ({
+						id: tallyTypes.TallyState[status],
+						label: status,
+					})),
+					multiple: false,
+					label: 'Status',
+				},
+			],
+		},
+	}
 }
 
 function getTrackingActions(): CompanionActions {
@@ -108,21 +148,4 @@ function getTrackingActions(): CompanionActions {
 			options: [],
 		},
 	} as CompanionActions
-}
-
-function getPtuControlActions(): CompanionActions {
-	return {
-		take_ptu_control: {
-			label: 'Take PTU control',
-			options: [],
-		},
-		release_ptu_control: {
-			label: 'Release PTU control',
-			options: [],
-		},
-		toggle_ptu_control: {
-			label: 'Toggle PTU control',
-			options: [],
-		},
-	}
 }

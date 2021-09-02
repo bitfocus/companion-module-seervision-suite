@@ -7,6 +7,7 @@ import * as containerTypes from '../api/ContainersManager'
 
 export default function getFeedbacks(api: Api, instance: Instance): CompanionFeedbacks {
 	const containers = api.containersManager.getContainers()
+	const triggerZones = api.triggerZonesManager.getTriggerZones()
 
 	return {
 		set_is_tracking: {
@@ -156,6 +157,44 @@ export default function getFeedbacks(api: Api, instance: Instance): CompanionFee
 							throw new Error(`Tally status '${val}' not implemented`)
 						})(tallyState)
 				}
+			},
+		},
+		set_trigger_zone_status: {
+			type: 'advanced',
+			label: 'Trigger Zone status',
+			description: 'Changes button style based on whether Trigger Zone is enabled or not',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'zoneId',
+					default: triggerZones[0]?.id ?? '',
+					choices: triggerZones.map(({ id, name: label }) => ({ id, label })),
+					minChoicesForSearch: 0,
+					multiple: false,
+					label: 'Trigger Zone',
+				},
+			],
+			callback: ({ options: { zoneId } }) => {
+				const zone = api.triggerZonesManager.getTriggerZone(zoneId as string)
+				if (!zone) {
+					return {
+						text: 'Linked zone was deleted',
+						bgcolor: instance.rgb(127, 132, 129),
+						color: instance.rgb(255, 255, 255),
+					}
+				}
+
+				return zone.is_enabled
+					? {
+							text: `${zone.name} enabled`,
+							bgcolor: instance.rgb(192, 37, 40),
+							color: instance.rgb(255, 255, 255),
+					  }
+					: {
+							text: `${zone.name} disabled`,
+							bgcolor: instance.rgb(29, 129, 57),
+							color: instance.rgb(255, 255, 255),
+					  }
 			},
 		},
 	}

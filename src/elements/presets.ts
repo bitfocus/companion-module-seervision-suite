@@ -10,8 +10,9 @@ export default function getPresets(api: Api, instance: Instance): Array<Companio
 	return [
 		...getConnectionPresets(instance),
 		...getContainerPresets(api, instance),
-		...getTrackingPresets(instance),
 		...getPtuControlPresets(instance),
+		...getTrackingPresets(instance),
+		...getTriggerZonePresets(api, instance),
 	]
 }
 
@@ -165,6 +166,38 @@ function getTrackingPresets(instance: Instance): Array<CompanionPreset> {
 			],
 		},
 	]
+}
+
+function getTriggerZonePresets(api: Api, instance: Instance): Array<CompanionPreset> {
+	const triggerZones = api.triggerZonesManager.getTriggerZones()
+	return triggerZones.map(
+		({ id, name }) =>
+			({
+				category: 'Trigger Zones',
+				label: 'Toggle Zone',
+				bank: {
+					style: 'text',
+					text: `Toggle "${name}"`,
+					size: 'auto',
+					color: instance.rgb(255, 255, 255),
+					bgcolor: 0,
+				},
+				feedbacks: [
+					{
+						type: 'set_trigger_zone_status',
+						options: { zoneId: id },
+					},
+				],
+				actions: [
+					{
+						action: 'toggle_trigger_zone',
+						options: {
+							zoneId: id,
+						},
+					},
+				],
+			} as CompanionPreset)
+	)
 }
 
 function getPtuControlPresets(instance: Instance): Array<CompanionPreset> {

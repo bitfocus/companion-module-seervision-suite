@@ -111,6 +111,30 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 				this.#api?.tallyManager.setTallyState(status)
 				break
 			}
+			case 'enable_trigger_zone': {
+				const zoneId = options.zoneId as string
+				this.#api?.triggerZonesManager.setZoneIsEnabled(zoneId, true)
+				break
+			}
+			case 'disable_trigger_zone': {
+				const zoneId = options.zoneId as string
+				this.#api?.triggerZonesManager.setZoneIsEnabled(zoneId, false)
+				break
+			}
+			case 'toggle_trigger_zone': {
+				const zoneId = options.zoneId as string
+				const zone = this.#api?.triggerZonesManager.getTriggerZone(zoneId)
+				if (zone) {
+					this.#api?.triggerZonesManager.setZoneIsEnabled(zoneId, !zone.is_enabled)
+				}
+				return
+			}
+			case 'enable_all_trigger_zones':
+				this.#api?.triggerZonesManager.setAllIsEnabled(true)
+				break
+			case 'disable_all_trigger_zones':
+				this.#api?.triggerZonesManager.setAllIsEnabled(false)
+				break
 			default:
 				this.handleUnknownAction(action.action)
 				break

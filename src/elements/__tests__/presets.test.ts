@@ -8,7 +8,7 @@ import getFeedbacks from '../feedbacks'
 jest.mock('../../api')
 jest.mock('../..')
 
-const PRESETS_COUNT = 14
+const PRESETS_COUNT = 17
 
 const api: Api = new (Api as jest.Mock)()
 const instance: InstanceSkeleton = new (InstanceSkeleton as any)()

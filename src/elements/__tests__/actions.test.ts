@@ -3,7 +3,7 @@ import Api from '../../api'
 
 jest.mock('../../api')
 
-const ACTIONS_COUNT = 11
+const ACTIONS_COUNT = 16
 
 const api: Api = new (Api as jest.Mock)()
 

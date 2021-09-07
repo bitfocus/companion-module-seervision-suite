@@ -14,6 +14,7 @@ This module will allow you to control Seervision Suite during your production. F
 - **Release PTU control** -- this action will release control of the PTU from the head, if the head has its own control system.
 - **Toggle PTU control** -- this action will toggle control of the PTU from the head, if the head has its own control system.
 - **Set Tally status** -- this action will set the tally status to either none/preview/program.
+- **Toggle Trigger Zone state** -- this action will enable or disable a Trigger Zone.
 
 ### Configuration
 

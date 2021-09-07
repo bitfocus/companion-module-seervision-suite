@@ -13,6 +13,7 @@ export default function getActions(api: Api): CompanionActions {
 		...getPtuControlActions(),
 		...getTallyActions(),
 		...getTrackingActions(),
+		...getTriggerZoneActions(api),
 	}
 }
 
@@ -145,6 +146,63 @@ function getTrackingActions(): CompanionActions {
 		},
 		toggle_tracking: {
 			label: 'Toggle tracking',
+			options: [],
+		},
+	} as CompanionActions
+}
+
+function getTriggerZoneActions(api: Api): CompanionActions {
+	const triggerZones = api.triggerZonesManager.getTriggerZones()
+
+	return {
+		enable_trigger_zone: {
+			label: 'Enable Trigger Zone',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'zoneId',
+					default: triggerZones[0]?.id ?? '',
+					choices: triggerZones.map(({ id, name: label }) => ({ id, label })) ?? [],
+					minChoicesForSearch: 0,
+					multiple: false,
+					label: 'Trigger Zone',
+				},
+			],
+		},
+		disable_trigger_zone: {
+			label: 'Disable Trigger Zone',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'zoneId',
+					default: triggerZones[0]?.id ?? '',
+					choices: triggerZones.map(({ id, name: label }) => ({ id, label })) ?? [],
+					minChoicesForSearch: 0,
+					multiple: false,
+					label: 'Trigger Zone',
+				},
+			],
+		},
+		toggle_trigger_zone: {
+			label: 'Toggle Trigger Zone',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'zoneId',
+					default: triggerZones[0]?.id ?? '',
+					choices: triggerZones.map(({ id, name: label }) => ({ id, label })) ?? [],
+					minChoicesForSearch: 0,
+					multiple: false,
+					label: 'Trigger Zone',
+				},
+			],
+		},
+		enable_all_trigger_zones: {
+			label: 'Enable all Trigger Zone',
+			options: [],
+		},
+		disable_all_trigger_zones: {
+			label: 'Disable all Trigger Zone',
 			options: [],
 		},
 	} as CompanionActions

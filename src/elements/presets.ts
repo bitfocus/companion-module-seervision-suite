@@ -10,8 +10,9 @@ export default function getPresets(api: Api, instance: Instance): Array<Companio
 	return [
 		...getConnectionPresets(instance),
 		...getContainerPresets(api, instance),
-		...getTrackingPresets(instance),
 		...getPtuControlPresets(instance),
+		...getTrackingPresets(instance),
+		...getTriggerZonePresets(api, instance),
 	]
 }
 
@@ -160,6 +161,76 @@ function getTrackingPresets(instance: Instance): Array<CompanionPreset> {
 			actions: [
 				{
 					action: 'stop_tracking',
+					options: {},
+				},
+			],
+		},
+	]
+}
+
+function getTriggerZonePresets(api: Api, instance: Instance): Array<CompanionPreset> {
+	const triggerZones = api.triggerZonesManager.getTriggerZones()
+	return [
+		...triggerZones.map(
+			({ id, name }) =>
+				({
+					category: 'Trigger Zones',
+					label: 'Toggle Zone',
+					bank: {
+						style: 'text',
+						text: `Toggle "${name}"`,
+						size: 'auto',
+						color: instance.rgb(255, 255, 255),
+						bgcolor: 0,
+					},
+					feedbacks: [
+						{
+							type: 'set_trigger_zone_status',
+							options: { zoneId: id },
+						},
+					],
+					actions: [
+						{
+							action: 'toggle_trigger_zone',
+							options: {
+								zoneId: id,
+							},
+						},
+					],
+				} as CompanionPreset)
+		),
+		{
+			category: 'Trigger Zones',
+			label: 'Disable all Trigger Zones',
+			bank: {
+				style: 'text',
+				text: 'Disable all Trigger Zones',
+				size: 'auto',
+				color: instance.rgb(255, 255, 255),
+				bgcolor: 0,
+			},
+			feedbacks: [],
+			actions: [
+				{
+					action: 'disable_all_trigger_zones',
+					options: {},
+				},
+			],
+		},
+		{
+			category: 'Trigger Zones',
+			label: 'Enable all Trigger Zones',
+			bank: {
+				style: 'text',
+				text: 'Enable all Trigger Zones',
+				size: 'auto',
+				color: instance.rgb(255, 255, 255),
+				bgcolor: 0,
+			},
+			feedbacks: [],
+			actions: [
+				{
+					action: 'enable_all_trigger_zones',
 					options: {},
 				},
 			],

@@ -17,15 +17,14 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 		this.#api = null
 	}
 
-	config_fields(): Array<
-		instanceSkelTypes.CompanionInputFieldTextInput | instanceSkelTypes.CompanionInputFieldCheckbox
-	> {
+	config_fields(): Array<instanceSkelTypes.SomeCompanionConfigField> {
 		return [
 			{
 				type: 'textinput',
 				id: 'host',
 				label: 'IP Address',
 				default: '10.10.12.101',
+				width: 6,
 				regex: this.REGEX_IP,
 			},
 			{
@@ -33,6 +32,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 				id: 'pathPrefix',
 				label: 'Path Prefix (leave blank if none)',
 				default: '',
+				width: 6,
 				regex: '/^([/][\\w-]+)*$/',
 			},
 			{
@@ -40,6 +40,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 				id: 'useLegacyUrl',
 				label: 'Legacy API? (version 40 Klausen and before)',
 				default: false,
+				width: 12,
 			},
 		]
 	}

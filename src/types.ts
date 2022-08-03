@@ -1,9 +1,9 @@
 import InstanceSkel from '../../../instance_skel'
 
 export type Config = {
-	host: string,
-	pathPrefix: string,
-	useLegacyUrl: boolean,
+	host: string
+	pathPrefix: string
+	useLegacyUrl: boolean
 }
 
 export type Instance = InstanceSkel<Config>

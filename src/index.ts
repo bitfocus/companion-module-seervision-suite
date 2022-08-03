@@ -17,7 +17,9 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 		this.#api = null
 	}
 
-	config_fields(): Array<instanceSkelTypes.CompanionInputFieldTextInput|instanceSkelTypes.CompanionInputFieldCheckbox> {
+	config_fields(): Array<
+		instanceSkelTypes.CompanionInputFieldTextInput | instanceSkelTypes.CompanionInputFieldCheckbox
+	> {
 		return [
 			{
 				type: 'textinput',
@@ -31,7 +33,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 				id: 'pathPrefix',
 				label: 'Path Prefix (leave blank if none)',
 				default: '',
-				regex: '/^([/][\\w-]+)*$/'
+				regex: '/^([/][\\w-]+)*$/',
 			},
 			{
 				type: 'checkbox',
@@ -52,7 +54,13 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 	}
 
 	initConnection(): void {
-	        this.#api = new Api(this.config.host, this.config.pathPrefix, this.config.useLegacyUrl, this.onConnectionUpdate, this)
+		this.#api = new Api(
+			this.config.host,
+			this.config.pathPrefix,
+			this.config.useLegacyUrl,
+			this.onConnectionUpdate,
+			this
+		)
 		this.#api.init()
 	}
 

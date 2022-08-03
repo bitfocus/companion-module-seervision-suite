@@ -1,6 +1,5 @@
 import WebSocket from 'ws'
 
-const ROS_BRIDGE_PORT = '49152'
 const API_PATH = '/api/v1'
 
 import type { Logger } from '../types'
@@ -13,8 +12,8 @@ export default class Connection {
 	readonly #logger: Logger
 	#isLoaded: boolean
 
-	constructor(dopIp: string, logger: Logger) {
-		const url = `ws://${dopIp}:${ROS_BRIDGE_PORT}`
+	constructor(dopIp: string, pathPrefix: string, useLegacyUrl: boolean, logger: Logger) {
+		const url = useLegacyUrl ? `ws://${dopIp}:49152` : `ws://${dopIp}${pathPrefix}/bridge_external`
 		this.#connection = new WebSocket(url)
 
 		this.#connection.on('message', this._onMessage)

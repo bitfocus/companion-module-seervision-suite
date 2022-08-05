@@ -30,8 +30,8 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 			{
 				type: 'textinput',
 				id: 'pathPrefix',
-				label: 'Path Prefix (leave blank if none)',
-				default: '',
+				label: 'Instance index',
+				default: '1',
 				width: 6,
 				regex: '/^([/][\\w-]+)*$/',
 			},

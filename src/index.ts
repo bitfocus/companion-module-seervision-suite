@@ -166,9 +166,10 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 
 	updateConfig(config: types.Config): void {
 		const didHostChange = this.config.host !== config.host
+		const didIndexChange = this.config.instanceIndex !== config.instanceIndex
 		this.config = config
 
-		if (didHostChange) {
+		if (didHostChange || didIndexChange) {
 			this.resetConnection()
 		}
 	}

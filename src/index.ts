@@ -28,19 +28,14 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 				regex: this.REGEX_IP,
 			},
 			{
-				type: 'textinput',
-				id: 'pathPrefix',
+				type: 'number',
+				id: 'instanceIndex',
 				label: 'Instance index',
-				default: '1',
+				min: 1,
+				max: 256,
+				default: 1,
 				width: 6,
-				regex: '/^([/][\\w-]+)*$/',
-			},
-			{
-				type: 'checkbox',
-				id: 'useLegacyUrl',
-				label: 'Legacy API? (version 40 Klausen and before)',
-				default: false,
-				width: 12,
+				required: true,
 			},
 		]
 	}
@@ -57,8 +52,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 	initConnection(): void {
 		this.#api = new Api(
 			this.config.host,
-			this.config.pathPrefix,
-			this.config.useLegacyUrl,
+			this.config.instanceIndex,
 			this.onConnectionUpdate,
 			this
 		)

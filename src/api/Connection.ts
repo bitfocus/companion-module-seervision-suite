@@ -12,8 +12,9 @@ export default class Connection {
 	readonly #logger: Logger
 	#isLoaded: boolean
 
-	constructor(dopIp: string, pathPrefix: string, useLegacyUrl: boolean, logger: Logger) {
-		const url = useLegacyUrl ? `ws://${dopIp}:49152` : `ws://${dopIp}${pathPrefix}/bridge_external`
+	constructor(dopIp: string, instanceIndex: number, logger: Logger) {
+		const pathPrefix = instanceIndex === 1 ? '' : `/${instanceIndex}`
+		const url = `ws://${dopIp}${pathPrefix}/bridge_external`
 		this.#connection = new WebSocket(url)
 
 		this.#connection.on('message', this._onMessage)

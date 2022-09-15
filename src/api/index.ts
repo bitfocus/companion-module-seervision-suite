@@ -15,8 +15,8 @@ export default class Api {
 	readonly trackingManager: TrackingManager
 	readonly triggerZonesManager: TriggerZonesManager
 
-	constructor(dopIp: string, onUpdate: () => void, logger: Logger) {
-		this.#connection = new Connection(dopIp, logger)
+	constructor(dopIp: string, instanceIndex: number, onUpdate: () => void, logger: Logger) {
+		this.#connection = new Connection(dopIp, instanceIndex, logger)
 
 		this.containersManager = new ContainersManager(this.#connection, onUpdate)
 		this.ptuControlManager = new PtuControlManager(this.#connection, onUpdate)

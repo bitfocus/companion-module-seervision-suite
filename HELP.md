@@ -18,7 +18,10 @@ This module will allow you to control Seervision Suite during your production. F
 
 ### Configuration
 
-In order to set up module, you will need to specify IP on which the Seervision Suite can be reached. If you're not sure, you can find the IP in the [Operations Server](https://manual.seervision.com/#/getting_started?id=dop-ip-address).
+To configure your Seervision connection, three fields need to be filled out:  
+* **Label:** A human-readable name of the instance that you will be controlling with this connection. Use something you will recognise, like `Server 1`, `Instance 1`.
+* **IP Address:** The IP address of the server you want to connect to and control. If you're not certain of the IP, follow the steps in [our manual](https://manual.seervision.com/#/getting_started?id=dop-ip-address).
+* **Instance index (optional):** By default, you will most likely want to use an index of `1`, the primary instance running on the server. If you wish to control other additional instances that are running on the same server, provide their index in this field.
 
 ### Troubleshooting
 

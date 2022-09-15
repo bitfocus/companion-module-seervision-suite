@@ -17,14 +17,25 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 		this.#api = null
 	}
 
-	config_fields(): instanceSkelTypes.CompanionInputFieldTextInput[] {
+	config_fields(): Array<instanceSkelTypes.SomeCompanionConfigField> {
 		return [
 			{
 				type: 'textinput',
 				id: 'host',
 				label: 'IP Address',
 				default: '10.10.12.101',
+				width: 6,
 				regex: this.REGEX_IP,
+			},
+			{
+				type: 'number',
+				id: 'instanceIndex',
+				label: 'Instance index',
+				min: 1,
+				max: 256,
+				default: 1,
+				width: 6,
+				required: true,
 			},
 		]
 	}
@@ -39,7 +50,7 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 	}
 
 	initConnection(): void {
-		this.#api = new Api(this.config.host, this.onConnectionUpdate, this)
+		this.#api = new Api(this.config.host, this.config.instanceIndex, this.onConnectionUpdate, this)
 		this.#api.init()
 	}
 
@@ -150,9 +161,10 @@ class SeervisionInstance extends InstanceSkel<types.Config> {
 
 	updateConfig(config: types.Config): void {
 		const didHostChange = this.config.host !== config.host
+		const didIndexChange = this.config.instanceIndex !== config.instanceIndex
 		this.config = config
 
-		if (didHostChange) {
+		if (didHostChange || didIndexChange) {
 			this.resetConnection()
 		}
 	}

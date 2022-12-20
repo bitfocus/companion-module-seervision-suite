@@ -1,6 +1,6 @@
 {
   "name": "seervision-suite",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Seervision plugin for Companion",
   "main": "dist/index.js",
   "manufacturer": "Seervision",
@@ -10,7 +10,7 @@
   "product": "Suite",
   "shortname": "seervision",
   "scripts": {
-    "build": "npx rimraf dist && npx typescript -p tsconfig.build.json",
+    "build": "npx rimraf dist && npx --package=typescript@4.5 -c 'tsc -p tsconfig.build.json'",
     "build:main": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -p tsconfig.build.json --watch",
     "lint": "eslint . --ext .ts --max-warnings 0",

@@ -10,7 +10,7 @@
   "product": "Suite",
   "shortname": "seervision",
   "scripts": {
-    "build": "npx rimraf dist && npx --package=typescript@4.5 -c 'tsc -p tsconfig.build.json'",
+    "build": "npx rimraf dist && npx --package=typescript@4.5 -c \"tsc -p tsconfig.build.json\"",
     "build:main": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -p tsconfig.build.json --watch",
     "lint": "eslint . --ext .ts --max-warnings 0",
